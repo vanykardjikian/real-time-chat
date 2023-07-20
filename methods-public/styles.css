@@ -1,21 +1,152 @@
+:root {
+    --bg-color-light: rgb(255, 255, 255);
+    --secondary-bg-color-light: rgb(242, 242, 242);
+    --text-color-light: rgb(17, 17, 17);
+    --secondary-text-color-light: rgb(155, 155, 155);
+    --bg-color-dark: rgb(14, 14, 16);
+    --secondary-bg-color-dark: rgb(24, 24, 27);
+    --text-color-dark: rgb(239, 239, 241);
+    --secondary-text-color-dark: rgb(121,121,129);
+    --accent-color-lightest: rgb(169,112,255);
+    --accent-color-light: rgb(145,71,255);
+    --accent-color-dark: rgb(113,55,199);
+}
+* {
+    margin: 0;
+}
+
 body {
-    background-color: rgb(36, 36, 36);
+    background-color: var(--bg-color-dark);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--secondary-bg-color-dark);
+    box-shadow: 0 0 0.1rem rgb(7, 7, 7);
+    padding: 0.5rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#toggle-theme {
+    display: flex;
+    font-size: 2.2rem;
+    color: var(--secondary-bg-color-light);
+    cursor: pointer;
+    transition: ease 0.2s;
+}
+
+#toggle-theme:hover {
+    color: var(--accent-color-lightest);
+}
+
+#username-container {
+    display: flex;
+    align-items: center;
+}
+
+
+#username-container h1 {
+    color: var(--text-color-dark);
+    font-size: 1.2rem;
+    padding: 1rem;
+}
+
+#username-input {
+    font-size: 1.2rem;
+    border: none;
+    border-bottom: solid;
+    border-color: var(--secondary-text-color-dark);
+    border-width: 0.05rem;
+    color: var(--text-color-dark);
+    background-color: var(--secondary-bg-color-dark);
+}
+
+#username-input:focus {
+    outline: none !important;
+    border-bottom: 0.05rem solid var(--accent-color-light);
+}
+
+#username-button {
+    color: var(--text-color-dark);
+    font-weight: 600;
+    border: none;
+    border-radius: 0.3rem;
+    margin-left: 1rem;
+    padding: 0.3rem 0.7rem;
+    background-color: var(--accent-color-light);
+    transition: ease 0.2s;
+    cursor: pointer;
+}
+
+#username-button:hover {
+    background-color: var(--accent-color-dark);
+}
+
+#chat-container {
+    margin-top: 6.5rem;
+    padding: 0 2rem 0 2rem;
+    color: white;
+    margin-bottom: 5rem;
+}
+
+#chat-message{
+    padding: 0.5rem 0 0.5rem 0;
+    color: var(--text-color-dark);
+}
+
+#status-update {
+    padding: 0.5rem 0 0.5rem 0;
+    color: var(--secondary-text-color-dark);
 }
 
 #message-container {
+    padding: 0.7rem;
+    background-color: var(--secondary-bg-color-dark);
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     display: flex;
+    align-items: center;
 }
 
 #message {
+    margin-right: 0.5rem;
+    color: var(--text-color-dark);
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0 1rem 0 1rem;
+    height: 2rem;
+    background-color: var(--bg-color-dark);
     flex-grow: 1;
-    border: none;
+    border-radius: 1rem;
+    border: 0.05rem solid var(--secondary-text-color-light);
 }
 
-#chat-container {
-    color: white;
-    margin-bottom: 2rem;
+#message:focus {
+    outline: none !important;
+    border: 0.05rem solid var(--accent-color-light);
+}
+
+#send-button {
+    display: flex;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.2rem;
+    background-color: var(--secondary-bg-color-dark);
+    color: var(--accent-color-light);
+    font-size: 2rem;
+    transition: ease 0.2s;
+    cursor: pointer;
+
+}
+
+#send-button:hover {
+    color: var(--accent-color-dark);
+    background-color: var(--bg-color-dark);
 }

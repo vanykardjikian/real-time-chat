@@ -55,6 +55,7 @@ socket.on("connect", () => {
 
 socket.on('hasConnected', user => {
     let newMessage = document.createElement('P');
+    newMessage. setAttribute('id','status-update');
     newMessage.textContent = user +  ' has connected';
     chat.appendChild(newMessage);
     window.scrollTo(0, document.body.scrollHeight);
@@ -63,6 +64,7 @@ socket.on('hasConnected', user => {
 // Disconnect
 socket.on('hasDisconnected', user => {
     let newMessage = document.createElement('P');
+    newMessage. setAttribute('id','status-update');
     newMessage.textContent = user + ' has disconnected';
     chat.appendChild(newMessage);
     window.scrollTo(0, document.body.scrollHeight);
@@ -71,6 +73,7 @@ socket.on('hasDisconnected', user => {
 // Chat
 socket.on('chat', (user, msg) => {
     let newMessage = document.createElement('P');
+    newMessage. setAttribute('id','chat-message');
     newMessage.textContent = `${user}: ${msg}`;
     chat.appendChild(newMessage);
     window.scrollTo(0, document.body.scrollHeight);
