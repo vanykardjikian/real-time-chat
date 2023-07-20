@@ -10,9 +10,15 @@
     <script src="app.js" defer></script>
 </head>
 <body>
+    <nav>
+        <form id="username-container">
+            <input type="text" id="username-input" autocomplete="off" placeholder="Anonymous">
+            <button type="submit" id="username-button">Change Username</button>
+        </form>
+    </nav>
     <div id="chat-container"></div>
     <form id="message-container">
-        <input type="text" id="message" autocomplete="off">
+        <input type="text" id="message" autocomplete="off" placeholder="Enter message">
         <button type="submit" id="send-button">Send</button>
     </form>
 </body>

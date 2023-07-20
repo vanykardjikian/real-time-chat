@@ -5,16 +5,32 @@ const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
 
+
 io.on('connection', (socket) => {
-    console.log('user connected');
+	if (!socket.data.username) {
+		socket.data.username = 'Anonymous'
+	}
+
+	socket.on("hasConnectedServer", username => {
+		io.emit('hasConnected', username)
+	})
+
     socket.on('disconnect', () => {
-      console.log('user disconnected');
+      	io.emit('hasDisconnected', socket.data.username)
+      	console.log(`${socket.data.username} disconnected`);
     });
-    socket.on('chat', msg => {
-        io.emit('chat', msg)
-        console.log(msg)
+	
+    socket.on('setUsername', username => {
+      	socket.data.username = username;
+    });
+
+    socket.on('chat', (user, msg) => {
+      	console.log("user " + user)
+      	console.log("msg " + msg)
+      	io.emit('chat', user, msg)
     })
-  });
+
+});
 
 app.use(express.static('./methods-public'))
 
