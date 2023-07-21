@@ -7,13 +7,13 @@ let usernameInput = document.getElementById("username-input")
 let username = 'Anonymous'
 
 window.addEventListener('load', () => {
-    let user =  JSON.parse(localStorage.getItem("chat-user"));
-    if (user) {
-        username = user.name
+    let sessionUsername =  sessionStorage.getItem("username");
+    if (sessionUsername) {
+        username = sessionUsername
         socket.emit("setUsername", username)
-        socket.emit("hasConnected", username)
         usernameInput.value = username
     }
+    socket.emit("hasConnected", username)
     console.log(username)
 })
 
@@ -22,9 +22,11 @@ window.addEventListener('load', () => {
 usernameForm.addEventListener('submit', e => {
     e.preventDefault()
     if (usernameInput.value) {
+        let oldUsername = username
         username = usernameInput.value
         socket.emit("setUsername", username)
-        localStorage.setItem("chat-user", JSON.stringify({ 'name': username }));
+        socket.emit("changeUsername", oldUsername, username)
+        sessionStorage.setItem("username", username);;
     }
 })
 
@@ -33,8 +35,10 @@ usernameForm.addEventListener('submit', e => {
 messageForm.addEventListener('submit', e => {
     e.preventDefault()
     if (message.value) {
-        socket.emit("chat", username, message.value);
+        socket.emit("chat", username, message.value, false);
+        appendMessage('You', message.value, true)
         message.value = ''
+
     }
 })
 
@@ -48,10 +52,10 @@ messageForm.addEventListener('input', () => {
 })*/
 
 // Connect
-socket.on("connect", () => {
+/*socket.on("connect", () => {
     socket.emit("hasConnectedServer", username);
 });
-
+*/
 
 socket.on('hasConnected', user => {
     let newMessage = document.createElement('P');
@@ -70,12 +74,52 @@ socket.on('hasDisconnected', user => {
     window.scrollTo(0, document.body.scrollHeight);
 })
 
-// Chat
-socket.on('chat', (user, msg) => {
+// Change Username
+socket.on('changeUsername', (oldUsername, newUsername) => {
     let newMessage = document.createElement('P');
-    newMessage. setAttribute('id','chat-message');
-    newMessage.textContent = `${user}: ${msg}`;
+    newMessage. setAttribute('id','status-update');
+    newMessage.textContent = oldUsername +' changed their name to ' + newUsername;
     chat.appendChild(newMessage);
     window.scrollTo(0, document.body.scrollHeight);
 })
 
+// Chat
+socket.on('chat', (user, msg, isSender) => {
+    appendMessage(user, msg, isSender)
+})
+
+function appendMessage(user, msg, isSender) {
+    let newMessageContainer = document.createElement('div');
+    newMessageContainer. setAttribute('class','chat-message-container');
+    if (isSender) {
+        newMessageContainer. setAttribute('id','sender');
+    }
+    let newMessageUsername = document.createElement('P');
+    newMessageUsername. setAttribute('id','chat-message-username');
+    newMessageUsername.textContent = user;
+    let newMessage = document.createElement('P');
+    newMessage. setAttribute('id','chat-message');
+    newMessage.textContent = msg;
+    newMessageContainer.appendChild(newMessageUsername)
+    newMessageContainer.appendChild(newMessage)
+    chat.appendChild(newMessageContainer);
+    window.scrollTo(0, document.body.scrollHeight);
+}
+
+
+let onlineUsers = document.querySelector('.online-users');
+socket.on('updateOnlineUsers', userlist => {
+    onlineUsers.innerHTML = ""
+    userlist.forEach(user => {
+        let newUser = document.createElement('div');
+        newUser.setAttribute('id','online-user');
+        newUser.innerHTML = "<i class='bx bx-user' ></i>";
+        let newUsername = document.createElement('P');
+        newUsername.setAttribute('id','online-user-username');
+        newUsername.innerText = user;
+        newUser.appendChild(newUsername)
+        onlineUsers.appendChild(newUser)
+
+    });
+        console.log(userlist)
+})

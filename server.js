@@ -6,30 +6,42 @@ const { Server } = require('socket.io')
 const io = new Server(server)
 const PORT = process.env.PORT || 3000
 
+async function fetchConnectedSockets() {
+	const sockets = await io.fetchSockets();
+	const onlineUsers = [];
+	sockets.forEach(socket => {
+		onlineUsers.push(socket.data.username)
+	})
+	io.emit('updateOnlineUsers', onlineUsers)
+}
 
 io.on('connection', (socket) => {
 	if (!socket.data.username) {
 		socket.data.username = 'Anonymous'
 	}
 
-	socket.on("hasConnectedServer", username => {
-		io.emit('hasConnected', username)
+	socket.on("hasConnected", username => {
+		socket.broadcast.emit('hasConnected', username)
+		fetchConnectedSockets()
 	})
 
     socket.on('disconnect', () => {
       	io.emit('hasDisconnected', socket.data.username)
-      	console.log(`${socket.data.username} disconnected`);
+      	fetchConnectedSockets()
     });
 	
-    socket.on('setUsername', username => {
+    socket.on('setUsername', (username) => {
       	socket.data.username = username;
     });
 
-    socket.on('chat', (user, msg) => {
-      	console.log("user " + user)
-      	console.log("msg " + msg)
-      	io.emit('chat', user, msg)
-    })
+	socket.on('changeUsername', (oldUsername, username) => {
+		socket.broadcast.emit('changeUsername', oldUsername, username)
+		fetchConnectedSockets()
+  	});
+
+    socket.on('chat', (user, msg, isSender) => {
+      	socket.broadcast.emit('chat', user, msg, isSender)
+    });
 
 });
 

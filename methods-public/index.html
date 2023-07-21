@@ -11,14 +11,22 @@
     <script src="app.js" defer></script>
 </head>
 <body>
-    <nav>
-        <form id="username-container">
-            <h1>Username:</h1>
-            <input type="text" id="username-input" autocomplete="off" placeholder="Anonymous">
-            <button type="submit" id="username-button">OK</button>
-        </form>
-        <a id="toggle-theme"><i class='bx bx-toggle-left'></i></a>
-    </nav>
+    <div class="bars-container">
+        <nav>
+            <form id="username-container">
+                <h1>Username:</h1>
+                <input type="text" id="username-input" autocomplete="off" placeholder="Anonymous">
+                <button type="submit" id="username-button">OK</button>
+            </form>
+            <a id="toggle-theme"><i class='bx bx-toggle-left'></i></a>
+        </nav>
+        <div class="online-users-container">
+            <h1>Online Users</h1>
+            <div class="online-users">
+                
+            </div>
+        </div>
+    </div>
     <div id="chat-container"></div>
     <form id="message-container">
         <input type="text" id="message" autocomplete="off" placeholder="Enter message">
