@@ -21,13 +21,12 @@ window.addEventListener('load', () => {
 // Username form
 usernameForm.addEventListener('submit', e => {
     e.preventDefault()
-    if (usernameInput.value) {
-        let oldUsername = username
-        username = usernameInput.value
-        socket.emit("setUsername", username)
-        socket.emit("changeUsername", oldUsername, username)
-        sessionStorage.setItem("username", username);;
-    }
+    if (!usernameInput.value) usernameInput.value = 'Anonymous'
+    let oldUsername = username
+    username = usernameInput.value
+    socket.emit("setUsername", username)
+    socket.emit("changeUsername", oldUsername, username)
+    sessionStorage.setItem("username", username)
 })
 
 
@@ -121,7 +120,6 @@ socket.on('updateOnlineUsers', userlist => {
         onlineUsers.appendChild(newUser)
 
     });
-        console.log(userlist)
 })
 
 
@@ -138,14 +136,7 @@ menuIcn2.addEventListener('click', () => {
     navbars.classList.toggle('active')
 })
 
-window.onscroll = () => {
-    navbars.classList.remove('active')
-    onlineUsersBar.classList.remove('active')
-}
-
-
 document.addEventListener('click', e => {
-    console.log(e.target)
     if (!navbars.contains(e.target) && e.target.id != 'menu-icon') {
         navbars.classList.remove('active')
         onlineUsersBar.classList.remove('active')
