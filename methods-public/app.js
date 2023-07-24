@@ -145,7 +145,8 @@ window.onscroll = () => {
 
 
 document.addEventListener('click', e => {
-    if (!e.target.classList.contains('active') && e.target.id != 'menu-icon') {
+    console.log(e.target)
+    if (!navbars.contains(e.target) && e.target.id != 'menu-icon') {
         navbars.classList.remove('active')
         onlineUsersBar.classList.remove('active')
     }

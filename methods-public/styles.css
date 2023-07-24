@@ -344,6 +344,19 @@ nav {
         border-bottom: 0.05rem solid var(--accent-color-dark);
     }
     
+    #username-input::placeholder {
+        color: rgb(40,40,46);
+        opacity: 1;
+    }
+      
+    #username-input:-ms-input-placeholder {
+        color: rgb(40,40,46);
+    }
+      
+    #username-input::-ms-input-placeholder {
+        color: rgb(40,40,46);
+    }
+
     #username-button {
         color: var(--text-color-dark);
         background-color: var(--bg-color-dark);
