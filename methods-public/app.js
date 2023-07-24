@@ -123,3 +123,30 @@ socket.on('updateOnlineUsers', userlist => {
     });
         console.log(userlist)
 })
+
+
+// Toggle navbar
+let menuIcn1 = document.querySelector('.first#menu-icon')
+let onlineUsersBar = document.querySelector('.online-users-container')
+menuIcn1.addEventListener('click', () => {
+    onlineUsersBar.classList.toggle('active')
+})
+
+let menuIcn2 = document.querySelector('.second#menu-icon')
+let navbars = document.querySelector('.bars-container')
+menuIcn2.addEventListener('click', () => {
+    navbars.classList.toggle('active')
+})
+
+window.onscroll = () => {
+    navbars.classList.remove('active')
+    onlineUsersBar.classList.remove('active')
+}
+
+
+document.addEventListener('click', e => {
+    if (!e.target.classList.contains('active') && e.target.id != 'menu-icon') {
+        navbars.classList.remove('active')
+        onlineUsersBar.classList.remove('active')
+    }
+})
