@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Vee1807/real-time-chat.git"
+    "url": "git+https://github.com/vanykardjikian/real-time-chat.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Vee1807/real-time-chat/issues"
+    "url": "https://github.com/vanykardjikian/real-time-chat/issues"
   },
-  "homepage": "https://github.com/Vee1807/real-time-chat#readme",
+  "homepage": "https://github.com/vanykardjikian/real-time-chat#readme",
   "devDependencies": {
     "nodemon": "^2.0.22"
   },
